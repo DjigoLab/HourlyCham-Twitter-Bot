@@ -1,0 +1,1 @@
+Hello world posted from a #bot created with #Java by @Djigolab using this tutorial https://medium.com/@SeloSlav/how-to-make-a-scary-russian-twitter-bot-with-java-b7b62768a3ac. This is my code
