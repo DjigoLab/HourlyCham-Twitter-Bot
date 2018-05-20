@@ -16,11 +16,15 @@ public class TwitterChamBot {
 
     private static void tweetPics() {
         Random r = new Random();
+        int countFiles = 0;
 
         try {
 
             //Finds a random chameleon Pic
-            int n = r.nextInt(2 + 1);
+            File folder = new File("C:\\Users\\Djigo\\Pictures\\CuteChams\\");
+            countFiles = folder.list().length;
+            int n = r.nextInt(countFiles + 1);
+
             File chamPic = new File("C:\\Users\\Djigo\\Pictures\\CuteChams\\" + n + ".jpg");
             System.out.println(n);
             sendTweet(chamPic);
