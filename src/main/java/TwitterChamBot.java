@@ -23,7 +23,7 @@ public class TwitterChamBot {
             //Finds a random chameleon Pic
             File folder = new File("C:\\Users\\Djigo\\Pictures\\CuteChams\\");
             countFiles = folder.list().length;
-            int n = r.nextInt(countFiles + 1);
+            int n = r.nextInt((countFiles) + 1);
 
             File chamPic = new File("C:\\Users\\Djigo\\Pictures\\CuteChams\\" + n + ".jpg");
             System.out.println(n);
