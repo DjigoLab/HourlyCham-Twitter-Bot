@@ -1,55 +1,57 @@
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
+import twitter4j.*;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
-public class TwitterChamBot{
+public class TwitterChamBot {
 
     public static void main(String[] args) {
-
-        tweetLines();
+        tweetPics();
 
     }
 
-    private static void tweetLines() {
-        String line;
+    private static void tweetPics() {
+        Random r = new Random();
+
         try {
-            try (
-                    InputStream fis = new FileInputStream("C:\\Users\\Djigo\\IdeaProjects\\TwitterChamBot\\src\\main\\resources\\tweet.txt");
-                    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("Cp1252"));
-                    BufferedReader br = new BufferedReader(isr);
-            ) {
-                while ((line = br.readLine()) != null) {
-                    // Deal with the line
-                    sendTweet(line);
-                    System.out.println("Tweeting: " + line + "...");
 
-                    try {
-                        System.out.println("Sleeping for 30 minutes...");
-                        Thread.sleep(1800000); // every 30 minutes
-                        // Thread.sleep(10000); // every 10 seconds
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            //Finds a random chameleon Pic
+            int n = r.nextInt(2 + 1);
+            File chamPic = new File("C:\\Users\\Djigo\\Pictures\\CuteChams\\" + n + ".jpg");
+            System.out.println(n);
+            sendTweet(chamPic);
+            //Sleeps for ONE DAY
+            System.out.println("Sleeping, see you tomorrow...");
 
-                }
-            }
-        } catch (IOException e) {
+            Thread.sleep(8640 * 10000);
+
+        } catch (InterruptedException e) {
+            System.out.println("Sleep failed");
             e.printStackTrace();
         }
 
     }
 
-    private static void sendTweet(String line) {
+    private static void sendTweet(File pic) {
         Twitter twitter = TwitterFactory.getSingleton();
-        Status status;
+
+        //Generates text and date
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String text = "Daily Cham! " + dateFormat.format(date);
+        StatusUpdate update = new StatusUpdate(text);
+
+        //Uploads pic and sends tweet
         try {
-            status = twitter.updateStatus(line);
-            System.out.println(status);
-        } catch (TwitterException e) {;
+            update.setMedia(pic);
+            twitter.updateStatus(update);
+
+        } catch (TwitterException e) {
+
             e.printStackTrace();
         }
     }
